@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>设置 middleware</title>
+  <style>
+    html,
+    body,
+    pre {
+      font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft Yahei", 微软雅黑, "Hiragino Sans GB", "PingFang SC", STHeiTi, sans-serif;
+      font-size: 14px;
+      padding: 0;
+      margin: 0;
+    }
+
+    input,
+    textarea {
+      font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft Yahei", 微软雅黑, "Hiragino Sans GB", "PingFang SC", STHeiTi, sans-serif;
+      font-size: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .root {
+      width: 800px;
+      margin: 0 auto;
+      padding-bottom: 100px;
+    }
+
+    a {
+      color: #337ab7;
+      text-decoration: none;
+    }
+
+    label {
+      display: block;
+    }
+
+    label input[type=text],
+    label textarea {
+      display: block;
+      width: 100%;
+      height: 34px;
+      padding: 0 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #555;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      margin-top: 8px;
+      background-color: lightyellow;
+    }
+
+    label textarea {
+      resize: none;
+      height: 200px;
+      padding: 5px 10px;
+    }
+
+    header {
+      line-height: 50px;
+      height: 50px;
+      position: sticky;
+    }
+
+    header label {
+      float: left;
+    }
+
+    button {
+      color: #fff;
+      margin-top: 12px;
+      background-color: #337ab7;
+      border-color: #2e6da4;
+      padding: 8px 16px;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      float: right;
+    }
+
+    button[disabled] {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    #tips {
+      text-align: center;
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      padding: 0 20px;
+      line-height: 40px;
+      background-color: #d9534f;
+      border-radius: 3px;
+      color: #fff;
+    }
+
+    #tips.success {
+      background: #5cb85c;
+    }
+
+    #tips.warn {
+      background: lightyellow;
+    }
+
+    .form-control {
+      margin-top: 36px;
+      font-weight: bold;
+    }
+
+    .desc {
+      margin-top: 10px;
+    }
+
+    pre {
+      margin: 10px 0;
+      padding: 0;
+      font-family: consola;
+      background: #eee;
+      padding-top: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="root" @vue:mounted="mounted">
+    <div>
+      <div id="tips" v-if="status.errorTip">{{status.errorTip}}</div>
+      <header>
+        <button :disabled="status.disabled" @click="submit">更新配置</button>
+      </header>
+      <label class="form-control">
+        中间件存放目录
+        <input v-model="data.middlewareBaseDir" maxlength="3072" type="text" placeholder="请输入完整目录路径" @input="status.disabled = false" />
+      </label>
+
+      <div class="desc">
+        如果设置了中间件的目录，则使用规则的时候可以使用相对路径，假设设置的存放目录为 <strong>/data/middlewares</strong>，则以下两种规则时等同的：
+        <div>
+          <pre
+            style="padding: 5px; border-radius: 5px; font-family: monospace, sans-serif;">pattern middleware:///data/middlewares/delayResponse.js?param=cityId</pre>
+        </div>
+        <div>
+          <pre
+            style="padding: 5px; border-radius: 5px; font-family: monospace, sans-serif;">pattern middleware://delayResponse.js?param=cityId</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="petite-vue.iife.js"></script>
+  <script src="app.js"></script>
+
+</body>
+
+</html>
