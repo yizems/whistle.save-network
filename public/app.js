@@ -7,12 +7,11 @@
     },
     data: {
       middlewareBaseDir: "",
+      iframeUrl: ""
     },
     submit() {
       this.status.disabled = true;
-      const body = {
-        middlewareBaseDir: (this.data.middlewareBaseDir || "").trim(),
-      };
+      const body = this.data;
       fetch("cgi-bin/set-settings", {
         method: "POST",
         headers: {
@@ -22,8 +21,7 @@
       })
         .then(r => r.json())
         .then(response => {
-          // this.status.disabled = false;
-          console.log("response: ", response);
+          this.status.disabled = false;
           if (response.code) {
             this.status.errorTip = response.msg;
           } else {
@@ -35,7 +33,10 @@
         })
     },
     mounted() {
-      fetch("cgi-bin/get-settings")
+      const query = new URLSearchParams({
+        keys: Object.keys(this.data).join(",")
+      });
+      fetch(`cgi-bin/get-settings?${query}`)
         .then(r => r.json())
         .then((data) => {
           this.data = data;

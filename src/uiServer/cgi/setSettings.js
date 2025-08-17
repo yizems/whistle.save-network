@@ -1,4 +1,5 @@
 import { stat } from 'fs';
+import path from "path";
 import getSettings from './getSettings';
 
 const readStat = (dir) => {
@@ -32,8 +33,21 @@ export default async (ctx) => {
       ctx.body = result;
       return;
     }
+    if (!path.isAbsolute(middlewareBaseDir)) {
+      ctx.body = {
+        code: 4,
+        msg: `${middlewareBaseDir} 不是绝对路径`,
+      };
+      return;
+    }
   }
   const { localStorage } = ctx.req;
-  localStorage.setProperty('middlewareBaseDir', middlewareBaseDir);
-  getSettings(ctx);
+  for (const key in ctx.request.body) {
+    if (!key) {
+      continue;
+    }
+    const value = (ctx.request.body[key] || "").trim();
+    localStorage.setProperty(key, value);
+  }
+  ctx.body = ctx.request.body;
 };

@@ -1,0 +1,121 @@
+html,
+body,
+pre {
+  font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft Yahei", 微软雅黑, "Hiragino Sans GB", "PingFang SC", STHeiTi, sans-serif;
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
+}
+
+input,
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft Yahei", 微软雅黑, "Hiragino Sans GB", "PingFang SC", STHeiTi, sans-serif;
+  font-size: 14px;
+}
+
+.root {
+  margin: 0 15px;
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+label {
+  display: block;
+}
+
+label input[type=text] {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  max-width: 600px;
+  height: 30px;
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  background-color: lightyellow;
+}
+
+button {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  padding: 4px 8px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  float: right;
+}
+
+button[disabled] {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+#tips {
+  text-align: center;
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  padding: 0 20px;
+  line-height: 40px;
+  background-color: #d9534f;
+  border-radius: 3px;
+  color: #fff;
+}
+
+#tips.success {
+  background: #5cb85c;
+}
+
+#tips.warn {
+  background: lightyellow;
+}
+
+.form-control {
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+pre {
+  border-radius: 5px;
+  padding: 5px;
+  font-family: monospace;
+  background: #eee;
+}
+
+p {
+  margin: 5px 0;
+}
+
+iframe{
+  border: 0;
+  width: 100%;
+  height: 800px;
+}
