@@ -1,7 +1,15 @@
 # whistle.middleware
 
+## 安装
+
+```
+npm install whistle.middleware --registry=https://registry.npmmirror.com
+```
+
+## 使用
+
 ```bash
-执行中间件
+# 执行中间件
 pattern middleware://D:\temporary\test.js
 
 pattern middleware://test.js # 这里需要在插件选项里设置目录
