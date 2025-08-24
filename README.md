@@ -21,6 +21,8 @@ pattern middleware://test.js?p1=v1&p2=v2 # 可以通过 ? 传递参数，使用 
 
 /**
  * 请求拦截
+ * 
+ * 如果 onRequest 返回 `false` 表示不再把请求透传给源服务，这个时候可以使用 `ctx.writeHead`/`ctx.end` 异步输出想要的响应内容
  * @param {{ 
  *      method: string, 
  *      url: URL | null, 
@@ -38,7 +40,7 @@ pattern middleware://test.js?p1=v1&p2=v2 # 可以通过 ? 传递参数，使用 
  *      }
  *    }} ctx
  */
-exports.onRequest = (ctx) => {
+exports.onRequest = async (ctx) => {
   console.log("request: ", ctx.method, ctx.fullUrl);
 }
 
@@ -65,7 +67,7 @@ exports.onRequest = (ctx) => {
  *      }
  *    }} ctx
  */
-exports.onResponse = (ctx) => {
+exports.onResponse = async (ctx) => {
   console.log("response: ", ctx.method, ctx.fullUrl);
 }
 ```

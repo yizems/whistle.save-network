@@ -51,12 +51,18 @@ export default (server: Whistle.PluginServer, options: Whistle.PluginOptions) =>
           res.end(data ? JSON.stringify(data) : "");
           breakNext = true;
         };
-        const result: Whistle.PluginNextResult | false = onRequest({ ...ctx });
-        if (result === false || breakNext) {
-          return;
-        }
-        next(result);
-        breakNext = true;
+        Promise.resolve(onRequest({ ...ctx }))
+          .catch(ex => {
+            console.warn(`执行 onRequest 发生异常: `, ex)
+            next();
+          })
+          .then(result => {
+            if (result === false || breakNext) {
+              return;
+            }
+            next(result);
+            breakNext = true;
+          });
       } else {
         next();
       }
