@@ -1,9 +1,9 @@
 {
-  "name": "whistle.middleware",
-  "version": "1.0.11",
+  "name": "whistle.save-network",
+  "version": "1.0.111",
   "description": "",
-  "whistleConfig": {},
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.19.11",
     "lack": "^1.4.0",
     "typescript": "^4.9.5"
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alanwei43/whistle.middleware"
+    "url": "xx"
   },
   "scripts": {
     "ts:watch": "tsc -w",
@@ -25,11 +25,24 @@
     "pub": "npm publish --registry https://registry.npmjs.org/"
   },
   "dependencies": {
+    "dayjs": "^1.11.18",
+    "fs-extra": "^11.3.2",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "undici": "^7.13.0",
+    "mime-types": "^3.0.1",
     "yaml": "^2.8.1"
+  },
+  "whistleConfig": {
+    "networkMenus": [
+      {
+        "name": "保存到本地",
+        "action": "/public/menus/save.html",
+        "required": false,
+        "requiredTreeNode": false,
+        "urlPattern": ""
+      }
+    ]
   }
 }

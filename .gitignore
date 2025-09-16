@@ -64,3 +64,4 @@ typings/
 .console.log
 
 temp/
+.idea

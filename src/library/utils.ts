@@ -1,4 +1,6 @@
 import fs from "fs";
+import os from "os";
+import path from "path";
 
 export function isJson(text: string) {
   const json = (text || "").split("\n").map(line => line.trim()).filter(line => line.length > 0);
@@ -11,6 +13,7 @@ export function isYaml(text: string) {
 }
 
 let MKDIR_CACHE = new Map<string, boolean>();
+
 export function mkdirSync(dir: string, force?: boolean) {
   if (MKDIR_CACHE.size > 1000) {
     MKDIR_CACHE.clear();
@@ -25,4 +28,8 @@ export function mkdirSync(dir: string, force?: boolean) {
     });
   }
   MKDIR_CACHE.set(dir, true);
+}
+
+export function defaultDir() {
+  return os.homedir() + path.sep + `.WhistleAppData${path.sep}savedNetwork`;
 }

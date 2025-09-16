@@ -10,34 +10,74 @@
 
 <body>
   <div id="app" class="root" @vue:mounted="mounted">
-    <div>
-      <div id="tips" v-if="status.errorTip">{{status.errorTip}}</div>
-      <label class="form-control">
-        中间件存放目录
-        <button @click="submit">保存配置</button>
-        <input v-model="data.middlewareBaseDir" maxlength="3072" type="text" placeholder="请输入完整目录路径" />
-      </label>
-
-      <div class="desc">
-        <p>
-          如果设置了中间件的目录，则使用规则的时候可以使用相对路径，假设设置的存放目录为 <strong>/data/middlewares</strong>，则以下两种规则是等同的：
-        </p>
-        <p>
-        <pre>pattern middleware:///data/middlewares/delayResponse.js?param=cityId</pre>
-        </p>
-        <p>
-        <pre>pattern middleware://delayResponse.js?param=cityId</pre>
-        </p>
+    <!-- 顶部设置按钮，仅主页面显示 -->
+    <div v-if="page === 'main'" style="height: 30px;padding: 5px; text-align: right;">
+      <button @click="go('setting')">设置</button>
+      <button @click="refreshSavedList" style="margin-right: 10px">刷新</button>
+    </div>
+    <!-- 主页面内容 -->
+    <div v-if="page === 'main'" style="display: flex; height: 95vh; border: 1px solid #eee;">
+      <!-- 左侧请求列表 -->
+      <div :style="selectedItem ? 'width: 45%; border-right: 1px solid #ddd; overflow-y: auto;' : 'width: 100%; overflow-y: auto;'">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead style="background: #f7f7f7;">
+            <tr>
+              <th v-for="col in columns" :key="col.name" style="padding: 4px; font-weight: normal;">{{col.name}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, idx) in savedList" :key="item.id"
+                :style="{background: selectedIdx === idx ? '#e6f7ff' : '', cursor: 'pointer'}"
+                @click="select(idx)">
+              <td v-for="col in columns" :key="col.name" style="padding: 4px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="getByPath(item, col.path)">
+                {{getByPath(item, col.path)}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <label class="form-control">
-        嵌套页面URL地址
-        <input v-model="data.iframeUrl" type="text" />
-      </label>
+      <!-- 右侧详情 -->
+      <div v-if="selectedItem" style="flex: 1; padding: 16px; overflow-y: auto;">
+        <button @click="closDetail">关闭</button>
+        <h3 style="margin: 0 0 8px 0;">请求详情: {{selectedItem?.fileName}}</h3>
+        <div><b>URL:</b> {{selectedItem?.url}}</div>
+        <div><b>方法:</b> {{selectedItem?.method || (selectedItem?.req && selectedItem.req.method)}}</div>
+        <div><b>状态:</b> {{selectedItem?.result || (selectedItem?.res && selectedItem.res.statusCode)}}</div>
+        <div><b>耗时:</b> {{selectedItem?.time}}</div>
+        <div style="margin-top: 8px;"><b>请求头:</b>
+          <pre style="background:#f7f7f7; padding:6px;">{{JSON.stringify(selectedItem?.req && selectedItem?.req?.headers, null, 2)}}</pre>
+        </div>
+        <div style="margin-top: 8px;"><b>Query 参数:</b>
+          <pre style="background:#f7f7f7; padding:6px;">{{getQueryParams(selectedItem?.url)}}</pre>
+        </div>
+        <div><b>请求体:</b>
+          <div v-html="getRequestBody(selectedItem)"></div>
+        </div>
+        <div style="margin-top: 8px;"><b>响应头:</b>
+          <pre style="background:#f7f7f7; padding:6px;">{{JSON.stringify(selectedItem?.res && selectedItem?.res?.headers, null, 2)}}</pre>
+        </div>
+        <div><b>响应体:</b>
+          <div v-html="getResponseBody(selectedItem)"></div>
+        </div>
+        <div style="margin-top: 8px;"><b>时序:</b>
+          <pre style="background:#f7f7f7; padding:6px;">{{JSON.stringify({dns:selectedItem?.dns,request:selectedItem?.request,response:selectedItem?.response,download:selectedItem?.download}, null, 2)}}</pre>
+        </div>
+      </div>
+    </div>
+    <!-- setting 子页面内容 -->
+    <div v-if="page === 'setting'">
       <div>
-        <iframe v-if="data.iframeUrl" :src="data.iframeUrl" frameborder="0"></iframe>
+        <div id="tips" v-if="status.errorTip">{{status.errorTip}}</div>
+        <label class="form-control">
+          数据存放目录
+          <button @click="go('main')" style="margin-left: 10px;">返回</button>
+          <button @click="submit">保存配置</button>
+          <input v-model="data.savedDir" maxlength="3072" type="text" placeholder="请输入完整目录路径" />
+        </label>
       </div>
     </div>
   </div>
+  <script src="util.js"></script>
   <script src="petite-vue.iife.js"></script>
   <script src="app.js"></script>
 

@@ -1,0 +1,80 @@
+<script>
+  /**
+   * @typedef {Object} Toast
+   * @property {Function} error
+   * @property {Function} info
+   * @property {Function} success
+   * @property {Function} warn
+   */
+
+  /**
+   *
+   * @typedef {Object} WhistleBridge
+   * @property {Function} getSelectedSessionList
+   * @property {Function} getActiveSession
+   * @property {Function} showOption
+   * @property {Function} hideOption
+   * @property {Function} updateUI
+   * @property {Function} copyText
+   * @property {string} pageId
+   * @property {Function} compose
+   * @property {Function} composeInterrupt
+   * @property {Function} decodeBase64
+   * @property {Function} joinBase64
+   * @property {Function} getReqId
+   * @property {Function} onComposeData
+   * @property {Function} offComposeData
+   * @property {Function} importSessions
+   * @property {Function} exportSessions
+   * @property {Function} importMockData
+   * @property {Function} download
+   * @property {Function} setNetworkSettings
+   * @property {Function} setRulesSettings
+   * @property {Function} setValuesSettings
+   * @property {Function} setComposerData
+   * @property {Function} showHttpsSettings
+   * @property {Function} showCustomCerts
+   * @property {Function} uploadCustomCerts
+   * @property {Function} showNetwork
+   * @property {Function} showRules
+   * @property {Function} showValues
+   * @property {Function} showPlugins
+   * @property {Function} showService
+   * @property {Function} hideService
+   * @property {Function} getInstalledPlugins
+   * @property {Function} showInstallPlugins
+   * @property {Function} showUpdatePlugins
+   * @property {Function} readFileAsText
+   * @property {Function} readFileAsBase64
+   * @property {Function} getVersion
+   * @property {Function} request
+   * @property {Function} createRequest
+   * @property {Function} parseRules
+   * @property {Function} showModal
+   * @property {Function} createModal
+   * @property {Function} importRules
+   * @property {Function} importValues
+   * @property {Function} getServerInfo
+   * @property {Function} alert
+   * @property {Function} confirm
+   * @property {Function} syncData
+   * @property {Function} syncRules
+   * @property {Function} syncValues
+   * @property {Toast} toast
+   */
+
+  /** @type {WhistleBridge} */
+  window.whistleBridge;
+
+  fetch(`/cgi-bin/save-network`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(window.whistleBridge.getSelectedSessionList())
+  }).catch(e => {
+    console.log(e)
+  }).then((data) => {
+    window.whistleBridge.toast.success(`已保存`);
+  });
+</script>
