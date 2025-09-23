@@ -1,3 +1,28 @@
+const DEFALT_COLUMNS = [
+  {name: '方法', path: 'method'},
+  {name: '状态', path: 'result'},
+  {name: 'URL', path: 'url'},
+  {name: 'type', path: 'type'}
+];
+
+function columnText2Columns(text) {
+  if (!text || text.length == 0) return null;
+  return text.split(/\n|\r/).map(line => {
+    const idx = line.indexOf(":");
+    if (idx > 0) {
+      return {
+        name: line.slice(0, idx).trim(),
+        path: line.slice(idx + 1).trim()
+      };
+    }
+  }).filter(Boolean);
+}
+
+function columsToText(columns) {
+  if (!columns || columns.length == 0) return '';
+  return columns.map(col => `${col.name}: ${col.path}`).join('\n');
+}
+
 function decodeBase64ToUtf8Str(data) {
   const binary = atob(data);
   const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
@@ -24,7 +49,7 @@ function getBodyByContentType(item, isRes) {
   }
   // html
   if (/text\/html/i.test(contentType) && typeof body === 'string') {
-    return `<iframe srcdoc="${body.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}" style="width:100%;height:300px;border:none;"></iframe>`;
+    return `<iframe srcdoc="${body.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')}" style="width:100%;height:300px;border:none;"></iframe>`;
   }
   // json
   if (/application\/json/i.test(contentType)) {
@@ -32,7 +57,8 @@ function getBodyByContentType(item, isRes) {
       let json = body;
       if (!json && base64) json = decodeBase64ToUtf8Str(base64);
       return `<pre style='background:#f7f7f7;padding:6px;'>${JSON.stringify(JSON.parse(json), null, 2)}</pre>`;
-    } catch(e) {}
+    } catch (e) {
+    }
   }
   // 文本
   if (/text\//i.test(contentType) && typeof body === 'string') {

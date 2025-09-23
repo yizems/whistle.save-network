@@ -22,14 +22,14 @@
         <table style="width: 100%; border-collapse: collapse;">
           <thead style="background: #f7f7f7;">
             <tr>
-              <th v-for="col in columns" :key="col.name" style="padding: 4px; font-weight: normal;">{{col.name}}</th>
+              <th v-for="col in data.columns" :key="col.name" style="padding: 4px; font-weight: normal;">{{col.name}}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, idx) in savedList" :key="item.id"
                 :style="{background: selectedIdx === idx ? '#e6f7ff' : '', cursor: 'pointer'}"
                 @click="select(idx)">
-              <td v-for="col in columns" :key="col.name" style="padding: 4px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="getByPath(item, col.path)">
+              <td v-for="col in data.columns" :key="col.name" style="padding: 4px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="getByPath(item, col.path)">
                 {{getByPath(item, col.path)}}
               </td>
             </tr>
@@ -74,6 +74,11 @@
           <button @click="submit">保存配置</button>
           <input v-model="data.savedDir" maxlength="3072" type="text" placeholder="请输入完整目录路径" />
         </label>
+        <div style="margin-top:16px;">
+          <label>显示的列（每行一个，格式：列名:path）</label>
+          <textarea v-model="data.columnsText" rows="6" style="width:100%;font-family:monospace;"></textarea>
+          <div style="color:#888;font-size:12px;">如：方法:method\n状态:result\nURL:url\ntype:type</div>
+        </div>
       </div>
     </div>
   </div>
