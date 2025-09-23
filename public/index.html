@@ -19,6 +19,10 @@
     <div v-if="page === 'main'" style="display: flex; height: 95vh; border: 1px solid #eee;">
       <!-- 左侧请求列表 -->
       <div :style="selectedItem ? 'width: 45%; border-right: 1px solid #ddd; overflow-y: auto;' : 'width: 100%; overflow-y: auto;'">
+        <!-- 搜索框 -->
+        <div style="padding: 8px; background: #fafbfc; border-bottom: 1px solid #eee;">
+          <input v-model="data.searchUrl" placeholder="搜索URL..." style="width:100%;padding:4px 8px;box-sizing:border-box;" />
+        </div>
         <table style="width: 100%; border-collapse: collapse;">
           <thead style="background: #f7f7f7;">
             <tr>
@@ -26,9 +30,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, idx) in savedList" :key="item.id"
-                :style="{background: selectedIdx === idx ? '#e6f7ff' : '', cursor: 'pointer'}"
-                @click="select(idx)">
+            <tr v-for="item in filteredList()" :key="item.fileName"
+                :style="{background: selectedItem && selectedItem.fileName === item.fileName ? '#e6f7ff' : '', cursor: 'pointer'}"
+                @click="select(item.fileName)">
               <td v-for="col in data.columns" :key="col.name" style="padding: 4px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="getByPath(item, col.path)">
                 {{getByPath(item, col.path)}}
               </td>

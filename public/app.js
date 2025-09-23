@@ -15,14 +15,15 @@
         {name: 'URL', path: 'url'},
         {name: 'type', path: 'type'}
       ],
-      columnsText: '', // 用于设置页面的列配置文本
+      columnsText: '',
+      searchUrl: '', // 新增：搜索框内容
     },
-    selectedIdx: null, // 当前选中请求索引
+    selectedFileName: null, // 当前选中请求 fileName
     get selectedItem() { // 当前选中请求对象
-      return this.selectedIdx != null ? this.savedList[this.selectedIdx] : null;
+      return this.selectedFileName != null ? this.savedList.find(item => item.fileName === this.selectedFileName) : null;
     },
-    select(idx) { // 选中请求
-      this.selectedIdx = idx;
+    select(fileName) { // 选中请求
+      this.selectedFileName = fileName;
     },
     go(page) {
       this.page = page;
@@ -129,7 +130,12 @@
         });
     },
     closDetail() {
-      this.select(null);
+      this.selectedFileName = null;
+    },
+    filteredList() {
+      const keyword = (this.data.searchUrl || '').trim().toLowerCase();
+      if (!keyword) return this.savedList;
+      return this.savedList.filter(item => (item.url || '').toLowerCase().includes(keyword));
     },
   }).mount("#app");
 })();
