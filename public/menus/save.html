@@ -66,15 +66,27 @@
   /** @type {WhistleBridge} */
   window.whistleBridge;
 
-  fetch(`/cgi-bin/save-network`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(window.whistleBridge.getSelectedSessionList())
-  }).catch(e => {
-    console.log(e)
-  }).then((data) => {
-    window.whistleBridge.toast.success(`已保存`);
+  function save(){
+    fetch(`/cgi-bin/save-network`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(window.whistleBridge.getSelectedSessionList())
+    }).catch(e => {
+      console.log(e)
+    }).then((data) => {
+      window.whistleBridge.toast.success(`已保存`);
+    });
+  }
+
+  window.whistleBridge.addNetworkListener(function(options) {
+    if (options.name === '保存到本地') {
+      save(options);
+    } else {
+      console.log("未知的按钮操作: " + options.name);
+    }
   });
+
+
 </script>
