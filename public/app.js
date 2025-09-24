@@ -16,8 +16,8 @@
         {name: 'type', path: 'type'}
       ],
       columnsText: '',
-      searchUrl: '', // 新增：搜索框内容
     },
+    searchUrl: '', // 新增：搜索框内容
     selectedFileName: null, // 当前选中请求 fileName
     get selectedItem() { // 当前选中请求对象
       return this.selectedFileName != null ? this.savedList.find(item => item.fileName === this.selectedFileName) : null;
@@ -117,7 +117,7 @@
         .then(r => r.json())
         .then((data) => {
           this.data = {
-            ...this.data,
+            savedDir: data.savedDir,
             columns: columnText2Columns(data.columnsText) ?? DEFALT_COLUMNS,
             columnsText: data.columnsText || data.columnsText.length == 0 ? columsToText(DEFALT_COLUMNS) : data.columnsText,
           }
