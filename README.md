@@ -1,5 +1,7 @@
 # whistle.save-network
 
+感谢 [whistle](https://github.com/avwo/whistle) 开发者, 非常好用的工具, 也学到了很多 js 的知识
+
 ```
 npm install @msyize/whistle.save-network -g
 ```
