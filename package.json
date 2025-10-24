@@ -1,6 +1,6 @@
 {
-  "name": "whistle.save-network",
-  "version": "1.0.111",
+  "name": "@msyize/whistle.save-network",
+  "version": "1.0.0",
   "description": "",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
@@ -10,19 +10,19 @@
   },
   "keywords": [
     "whistle",
-    "proxy",
-    "ssi"
+    "network",
+    "save"
   ],
   "repository": {
     "type": "git",
-    "url": "xx"
+    "url": "https://github.com/yizems/whistle.save-network"
   },
   "scripts": {
     "ts:watch": "tsc -w",
     "ts:build": "tsc",
     "lack:watch": "lack watch",
     "dev": "tsc -w",
-    "pub": "npm publish --registry https://registry.npmjs.org/"
+    "pub": "npm publish"
   },
   "dependencies": {
     "dayjs": "^1.11.18",

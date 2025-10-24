@@ -1,5 +1,9 @@
 # whistle.save-network
 
+```
+npm install @msyize/whistle.save-network -g
+```
+
 ## Warn
 
 - 如果开发中, 发现接口无法访问, 并且插件中没有日志, 那记得改下package中的name, 并重新启动插件,配置rule;
