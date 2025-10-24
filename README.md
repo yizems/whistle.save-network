@@ -4,6 +4,18 @@
 npm install @msyize/whistle.save-network -g
 ```
 
+## 截图
+
+![img_1.png](./doc/img_1.png)
+
+![img_2.png](./doc/img_2.png)
+
+![img_3.png](./doc/img_3.png)
+
+![img_4.png](./doc/img_4.png)
+
+![img_5.png](./doc/img_5.png)
+
 ## Warn
 
 - 如果开发中, 发现接口无法访问, 并且插件中没有日志, 那记得改下package中的name, 并重新启动插件,配置rule;
