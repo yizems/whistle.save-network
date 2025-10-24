@@ -10,6 +10,8 @@ npm install @msyize/whistle.save-network -g
 
 ![img_1.png](./doc/img_1.png)
 
+在 other 里面有一个 按钮, 截图没截上
+
 ![img_2.png](./doc/img_2.png)
 
 ![img_3.png](./doc/img_3.png)
